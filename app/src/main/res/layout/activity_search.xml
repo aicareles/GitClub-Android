@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/ll_search"
+        android:gravity="center_vertical"
+        android:background="@drawable/shape_search"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp">
+        <ImageView
+            android:src="@mipmap/search_page_icon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="10dp"/>
+        <EditText
+            android:id="@+id/search_edit"
+            android:background="@null"
+            android:layout_width="match_parent"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1"
+            android:layout_marginStart="5dp"
+            android:textSize="12sp"
+            android:layout_height="24dp"/>
+    </LinearLayout>
+
+    <com.zhy.view.flowlayout.TagFlowLayout
+        android:id="@+id/flowlayout"
+        android:layout_below="@+id/ll_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:paddingStart="4dp"
+        android:paddingEnd="12dp"
+        app:max_select="-1">
+    </com.zhy.view.flowlayout.TagFlowLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_search"/>
+
+</RelativeLayout>

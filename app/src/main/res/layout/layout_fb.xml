@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto">
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fb_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom|end"
+        android:padding="16dp"
+        fab:menu_backgroundColor="@color/transparent"
+        fab:menu_colorNormal="?attr/colorPrimary"
+        fab:menu_colorPressed="?attr/colorPrimary"
+        fab:menu_labels_ellipsize="end"
+        fab:menu_labels_position="left"
+        fab:menu_labels_singleLine="true">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fb_person"
+            style="@style/MenuButtonsStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            fab:fab_label="我的" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fb_submission"
+            style="@style/MenuButtonsStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            fab:fab_label="投稿" />
+
+    </com.github.clans.fab.FloatingActionMenu>
+
+</android.support.constraint.ConstraintLayout>
