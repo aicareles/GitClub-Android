@@ -43,9 +43,6 @@ public class SearchActivity extends BaseActivity {
     @Inject
     ArticleViewModel articleViewModel;
 
-    @Inject
-    User user;
-
     private ArrayList<String> hotList;
     TagAdapter<String> tagAdapter;
     private ArticleAdapter mAdapter;
@@ -63,7 +60,6 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     protected void bindData() {
-        user.setNick_name("爱神一不小心");
         setTitle("搜索");
         mAdapter = new ArticleAdapter(articleViewModel.getQueryLiveData().getValue(), this);
         recyclerview.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));

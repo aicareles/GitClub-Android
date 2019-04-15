@@ -30,12 +30,6 @@ public class MainActivity extends BaseActivity {
     @Inject
     ArticleViewModel articleViewModel;
 
-    @Inject
-    ArticleViewModel articleViewModel2;
-
-    @Inject
-    User user;
-
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
     @BindView(R.id.refreshlayout)
@@ -63,7 +57,6 @@ public class MainActivity extends BaseActivity {
         mAdapter = new ArticleAdapter(articleViewModel.getArticleLiveData().getValue(), this);
         recyclerview.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         recyclerview.setAdapter(mAdapter);
-        user.setNick_name("刘磊");
     }
 
     @Override
@@ -81,7 +74,7 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
-        articleViewModel2.getArticleTotals()
+        articleViewModel.getArticleTotals()
                 .getSumLiveData()
                 .observe(this, new Observer<Integer>() {
             @Override
