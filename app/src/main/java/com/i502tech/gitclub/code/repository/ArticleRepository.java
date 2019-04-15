@@ -1,10 +1,6 @@
 package com.i502tech.gitclub.code.repository;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.i502tech.gitclub.api.HttpUtils;
@@ -13,17 +9,11 @@ import com.i502tech.gitclub.api.http.api.BaseResponse;
 import com.i502tech.gitclub.api.http.api.subscriber.SubscriberListener;
 import com.i502tech.gitclub.base.BaseRepository;
 import com.i502tech.gitclub.code.bean.Article;
-import com.i502tech.gitclub.code.event.Event;
-import com.i502tech.gitclub.code.viewmodel.ArticleViewModel;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
