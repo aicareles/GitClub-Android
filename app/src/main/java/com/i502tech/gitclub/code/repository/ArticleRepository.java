@@ -14,6 +14,7 @@ import com.i502tech.gitclub.api.http.api.subscriber.SubscriberListener;
 import com.i502tech.gitclub.base.BaseRepository;
 import com.i502tech.gitclub.code.bean.Article;
 import com.i502tech.gitclub.code.event.Event;
+import com.i502tech.gitclub.code.viewmodel.ArticleViewModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
@@ -30,6 +32,9 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class ArticleRepository extends BaseRepository {
+    public MutableLiveData<List<Article>> articleLiveData = new MutableLiveData<>();
+    public MutableLiveData<Integer> sumLiveData = new MutableLiveData<>();
+    public MutableLiveData<List<Article>> queryLiveData = new MutableLiveData<>();
 
     public void getArticleList(String page, String size) {
         Map<String, String> map = new HashMap<>();
@@ -38,7 +43,7 @@ public class ArticleRepository extends BaseRepository {
         HttpUtils.ApiFunc(RetrofitManager.mApiService.getArticleList(map), new SubscriberListener<BaseResponse<List<Article>>>() {
             @Override
             public void onSuccess(BaseResponse<List<Article>> userBaseResponse) {
-                sendData(Event.EVENT_KEY_ARTICLE_LIST, userBaseResponse.data);
+                articleLiveData.setValue(userBaseResponse.data);
             }
 
             @Override
@@ -57,7 +62,7 @@ public class ArticleRepository extends BaseRepository {
         HttpUtils.ApiFunc(RetrofitManager.mApiService.getArticleTotals(), new SubscriberListener<BaseResponse<Integer>>() {
             @Override
             public void onSuccess(BaseResponse<Integer> integerBaseResponse) {
-                sendData(Event.EVENT_KEY_ARTICLE_SIZE, integerBaseResponse.data);
+                sumLiveData.setValue(integerBaseResponse.data);
             }
 
             @Override
@@ -80,7 +85,7 @@ public class ArticleRepository extends BaseRepository {
         HttpUtils.ApiFunc(RetrofitManager.mApiService.query(map), new SubscriberListener<BaseResponse<List<Article>>>() {
             @Override
             public void onSuccess(BaseResponse<List<Article>> userBaseResponse) {
-                sendData(Event.EVENT_KEY_ARTICLE_QUERY, userBaseResponse.data);
+                queryLiveData.setValue(userBaseResponse.data);
             }
 
             @Override

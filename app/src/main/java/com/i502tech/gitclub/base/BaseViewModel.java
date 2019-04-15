@@ -7,4 +7,6 @@ import android.arch.lifecycle.ViewModel;
  * created by jerry on 2019/4/13.
  */
 public class BaseViewModel extends ViewModel {
+
+
 }

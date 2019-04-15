@@ -17,6 +17,7 @@ import com.i502tech.gitclub.code.view.FloatingActionLayout;
 import com.i502tech.gitclub.code.viewmodel.ArticleViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -59,16 +60,16 @@ public class MainActivity extends BaseActivity {
         mAdapter = new ArticleAdapter(mArticles, this);
         recyclerview.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         recyclerview.setAdapter(mAdapter);
-        articleViewModel.getArticleList(String.valueOf(page), String.valueOf(15));
-        articleViewModel.getArticleTotals();
+
     }
 
     @Override
     protected void dataObserver() {
-        ArrayList<Article> articles = new ArrayList<>();
-        registerObserver(Event.EVENT_KEY_ARTICLE_LIST, articles).observe(this, new Observer<ArrayList<Article>>() {
+        articleViewModel.getArticleList("0","10")
+                .getArticleLiveData()
+                .observe(this, new Observer<List<Article>>() {
             @Override
-            public void onChanged(@Nullable ArrayList<Article> articles) {
+            public void onChanged(@Nullable List<Article> articles) {
                 if (page == 0) {
                     refreshlayout.setRefreshing(false);
                     mArticles.clear();
@@ -77,13 +78,15 @@ public class MainActivity extends BaseActivity {
                 mAdapter.notifyDataSetChanged();
             }
         });
-
-        registerObserver(Event.EVENT_KEY_ARTICLE_SIZE, Integer.class).observe(this, new Observer<Integer>() {
+        articleViewModel.getArticleTotals()
+                .getSumLiveData()
+                .observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer integer) {
                 tvNum.setText("点击搜索，已收录" + integer + "个开源项目");
             }
         });
+
     }
 
     @Override
@@ -93,14 +96,14 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onRefresh() {
                 page = 0;
-                articleViewModel.getArticleList(String.valueOf(page), String.valueOf(15));
+                articleViewModel.getArticleList(String.valueOf(page), String.valueOf(10));
             }
         });
         mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
                 page++;
-                articleViewModel.getArticleList(String.valueOf(page), String.valueOf(15));
+                articleViewModel.getArticleList(String.valueOf(page), String.valueOf(10));
             }
         }, recyclerview);
     }

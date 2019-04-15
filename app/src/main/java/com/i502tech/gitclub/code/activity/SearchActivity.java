@@ -95,10 +95,9 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     protected void dataObserver() {
-        ArrayList<Article> articles = new ArrayList<>();
-        registerObserver(Event.EVENT_KEY_ARTICLE_QUERY, articles).observe(this, new Observer<ArrayList<Article>>() {
+        articleViewModel.getQueryLiveData().observe(this, new Observer<List<Article>>() {
             @Override
-            public void onChanged(@Nullable ArrayList<Article> articles) {
+            public void onChanged(@Nullable List<Article> articles) {
                 if (page == 0) {
                     mArticles.clear();
                 }
