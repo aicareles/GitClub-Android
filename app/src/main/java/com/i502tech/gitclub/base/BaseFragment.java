@@ -1,20 +1,24 @@
 package com.i502tech.gitclub.base;
 
 
+import android.app.Activity;
 import android.app.Dialog;
-import android.arch.lifecycle.ViewModel;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.i502tech.gitclub.code.di.ActivityComponent;
-import com.i502tech.gitclub.code.di.DaggerActivityComponent;
+import com.i502tech.gitclub.App;
+import com.i502tech.gitclub.code.di.component.ActivityComponent;
+import com.i502tech.gitclub.code.di.component.DaggerActivityComponent;
+import com.i502tech.gitclub.code.di.module.ActivityModule;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -30,6 +34,20 @@ public abstract class BaseFragment extends Fragment {
     protected View mRootView;
     private Unbinder mUnBinder;
     private ActivityComponent mActivityComponent;
+    protected Context context;
+    protected Activity activity;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = getContext();
+        activity = getActivity();
+        mActivityComponent = DaggerActivityComponent.builder()
+                .activityModule(new ActivityModule((AppCompatActivity) activity))
+                .applicationComponent((App.getInstance().getApplicationComponent()))
+                .build();
+        initInject();
+    }
 
     @Nullable
     @Override
@@ -39,7 +57,6 @@ public abstract class BaseFragment extends Fragment {
             mRootView = inflater.inflate(layoutId(), null);
             mUnBinder = ButterKnife.bind(this, mRootView);
         }
-        mActivityComponent = DaggerActivityComponent.builder().build();
         bindData();
         bindListener();
         return mRootView;
@@ -55,6 +72,10 @@ public abstract class BaseFragment extends Fragment {
     protected abstract void bindData();
 
     protected abstract void bindListener();
+
+    public ActivityComponent getActivityComponent() {
+        return mActivityComponent;
+    }
 
     protected void toActivity(@NonNull Class cl) {
         startActivity(new Intent(getActivity(), cl));

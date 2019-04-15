@@ -1,18 +1,17 @@
-package com.i502tech.gitclub.code.di;
+package com.i502tech.gitclub.code.di.component;
 
 import com.i502tech.gitclub.code.activity.MainActivity;
 import com.i502tech.gitclub.code.activity.SearchActivity;
-
-import javax.inject.Singleton;
-
+import com.i502tech.gitclub.code.di.ActivityScope;
+import com.i502tech.gitclub.code.di.module.ActivityModule;
 import dagger.Component;
 
 /**
  * description $desc$
  * created by jerry on 2019/4/11.
  */
-@Singleton//注意：写在Component的上面
-@Component(modules = ActivityModule.class)
+@ActivityScope
+@Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
 public interface ActivityComponent {
     void inject(MainActivity mainActivity);
     void inject(SearchActivity searchActivity);

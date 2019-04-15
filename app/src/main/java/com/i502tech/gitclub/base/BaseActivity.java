@@ -1,7 +1,6 @@
 package com.i502tech.gitclub.base;
 
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -22,15 +21,16 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.i502tech.gitclub.App;
 import com.i502tech.gitclub.R;
 import com.i502tech.gitclub.app.language.LanguageUtil;
-import com.i502tech.gitclub.code.di.ActivityComponent;
-import com.i502tech.gitclub.code.di.DaggerActivityComponent;
+import com.i502tech.gitclub.code.di.component.ActivityComponent;
+import com.i502tech.gitclub.code.di.component.DaggerActivityComponent;
+import com.i502tech.gitclub.code.di.module.ActivityModule;
 import com.i502tech.gitclub.code.event.LiveBus;
 import com.i502tech.gitclub.utils.GlobalStatusBarUtil;
 import com.i502tech.gitclub.utils.ToastUtil;
@@ -65,7 +65,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(layoutId());
         GlobalStatusBarUtil.setFitsSystemWindows(this, true);
         initToolBar();
-        mActivityComponent = DaggerActivityComponent.builder().build();
+        mActivityComponent = DaggerActivityComponent.builder()
+                .activityModule(new ActivityModule(this))
+                .applicationComponent(App.getInstance().getApplicationComponent())
+                .build();
         initInject();
         dataObserver();
         unbind = ButterKnife.bind(this);

@@ -16,6 +16,7 @@ import com.i502tech.gitclub.R;
 import com.i502tech.gitclub.base.BaseActivity;
 import com.i502tech.gitclub.code.adapter.ArticleAdapter;
 import com.i502tech.gitclub.code.bean.Article;
+import com.i502tech.gitclub.code.bean.User;
 import com.i502tech.gitclub.code.viewmodel.ArticleViewModel;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -42,6 +43,9 @@ public class SearchActivity extends BaseActivity {
     @Inject
     ArticleViewModel articleViewModel;
 
+    @Inject
+    User user;
+
     private ArrayList<String> hotList;
     TagAdapter<String> tagAdapter;
     private ArticleAdapter mAdapter;
@@ -59,6 +63,7 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     protected void bindData() {
+        user.setNick_name("爱神一不小心");
         setTitle("搜索");
         mAdapter = new ArticleAdapter(articleViewModel.getQueryLiveData().getValue(), this);
         recyclerview.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
