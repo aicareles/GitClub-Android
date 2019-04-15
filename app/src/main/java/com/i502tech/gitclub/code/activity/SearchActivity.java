@@ -16,17 +16,13 @@ import com.i502tech.gitclub.R;
 import com.i502tech.gitclub.base.BaseActivity;
 import com.i502tech.gitclub.code.adapter.ArticleAdapter;
 import com.i502tech.gitclub.code.bean.Article;
-import com.i502tech.gitclub.code.event.Event;
 import com.i502tech.gitclub.code.viewmodel.ArticleViewModel;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -46,10 +42,8 @@ public class SearchActivity extends BaseActivity {
     @Inject
     ArticleViewModel articleViewModel;
 
-    List<String> hotList = Arrays.asList("自定义View", "Tab", "WebView", "图片加载", "相机",
-             "图表", "列表", "数据库", "蓝牙", "视频", "网络请求", "人脸识别", "OpenGL", "Canvas", "音频", "完整项目");
+    private ArrayList<String> hotList;
     TagAdapter<String> tagAdapter;
-    private ArrayList<Article> mArticles;
     private ArticleAdapter mAdapter;
     private int page = 0;
 
@@ -66,11 +60,11 @@ public class SearchActivity extends BaseActivity {
     @Override
     protected void bindData() {
         setTitle("搜索");
-        mArticles = new ArrayList<>();
-        mAdapter = new ArticleAdapter(mArticles, this);
+        mAdapter = new ArticleAdapter(articleViewModel.getQueryLiveData().getValue(), this);
         recyclerview.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         recyclerview.setAdapter(mAdapter);
 
+        hotList = new ArrayList<>();
         tagAdapter = new TagAdapter<String>(hotList) {
             @Override
             public View getView(FlowLayout parent, int position, String s) {
@@ -80,16 +74,6 @@ public class SearchActivity extends BaseActivity {
                 return view;
             }
         };
-        flowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
-            @Override
-            public boolean onTagClick(View view, int position, FlowLayout parent) {
-                flowLayout.setVisibility(View.GONE);
-                searchEdit.setText(tagAdapter.getItem(position));
-                page = 0;
-                articleViewModel.query(String.valueOf(page), String.valueOf(10), searchEdit.getText().toString());
-                return true;
-            }
-        });
         flowLayout.setAdapter(tagAdapter);
     }
 
@@ -99,10 +83,17 @@ public class SearchActivity extends BaseActivity {
             @Override
             public void onChanged(@Nullable List<Article> articles) {
                 if (page == 0) {
-                    mArticles.clear();
+                    mAdapter.setNewData(articles);
+                }else {
+                    mAdapter.addData(articles);
                 }
-                mArticles.addAll(articles);
-                mAdapter.notifyDataSetChanged();
+            }
+        });
+        articleViewModel.getHotArticle().getHotLiveData().observe(this, new Observer<List<String>>() {
+            @Override
+            public void onChanged(@Nullable List<String> strings) {
+                hotList.addAll(strings);
+                tagAdapter.notifyDataChanged();
             }
         });
     }
@@ -124,10 +115,21 @@ public class SearchActivity extends BaseActivity {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     //关闭软键盘
                     hideSoftKeyboard();
+                    flowLayout.setVisibility(View.GONE);
                     articleViewModel.query(String.valueOf(page), String.valueOf(10), searchEdit.getText().toString());
                     return true;
                 }
                 return false;
+            }
+        });
+        flowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+            @Override
+            public boolean onTagClick(View view, int position, FlowLayout parent) {
+                flowLayout.setVisibility(View.GONE);
+                searchEdit.setText(tagAdapter.getItem(position));
+                page = 0;
+                articleViewModel.query(String.valueOf(page), String.valueOf(10), searchEdit.getText().toString());
+                return true;
             }
         });
     }

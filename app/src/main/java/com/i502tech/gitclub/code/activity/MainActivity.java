@@ -12,11 +12,9 @@ import com.i502tech.gitclub.R;
 import com.i502tech.gitclub.base.BaseActivity;
 import com.i502tech.gitclub.code.adapter.ArticleAdapter;
 import com.i502tech.gitclub.code.bean.Article;
-import com.i502tech.gitclub.code.event.Event;
 import com.i502tech.gitclub.code.view.FloatingActionLayout;
 import com.i502tech.gitclub.code.viewmodel.ArticleViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -40,7 +38,6 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.tv_num)
     TextView tvNum;
 
-    private ArrayList<Article> mArticles;
     private ArticleAdapter mAdapter;
     private int page = 0;
 
@@ -56,11 +53,9 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void bindData() {
-        mArticles = new ArrayList<>();
-        mAdapter = new ArticleAdapter(mArticles, this);
+        mAdapter = new ArticleAdapter(articleViewModel.getArticleLiveData().getValue(), this);
         recyclerview.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         recyclerview.setAdapter(mAdapter);
-
     }
 
     @Override
@@ -72,10 +67,10 @@ public class MainActivity extends BaseActivity {
             public void onChanged(@Nullable List<Article> articles) {
                 if (page == 0) {
                     refreshlayout.setRefreshing(false);
-                    mArticles.clear();
+                    mAdapter.setNewData(articles);
+                }else {
+                    mAdapter.addData(articles);
                 }
-                mArticles.addAll(articles);
-                mAdapter.notifyDataSetChanged();
             }
         });
         articleViewModel.getArticleTotals()

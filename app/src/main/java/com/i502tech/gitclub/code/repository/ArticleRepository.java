@@ -10,6 +10,7 @@ import com.i502tech.gitclub.api.http.api.subscriber.SubscriberListener;
 import com.i502tech.gitclub.base.BaseRepository;
 import com.i502tech.gitclub.code.bean.Article;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import javax.inject.Singleton;
 public class ArticleRepository extends BaseRepository {
     public MutableLiveData<List<Article>> articleLiveData = new MutableLiveData<>();
     public MutableLiveData<Integer> sumLiveData = new MutableLiveData<>();
+    public MutableLiveData<List<String>> hotLiveData = new MutableLiveData<>();
     public MutableLiveData<List<Article>> queryLiveData = new MutableLiveData<>();
 
     public void getArticleList(String page, String size) {
@@ -40,11 +42,6 @@ public class ArticleRepository extends BaseRepository {
             public void onFailer(String msg) {
                 Log.e("onFailer", "onFailer: ");
             }
-
-            @Override
-            public void onTokenError() {
-
-            }
         });
     }
 
@@ -59,12 +56,13 @@ public class ArticleRepository extends BaseRepository {
             public void onFailer(String msg) {
 
             }
-
-            @Override
-            public void onTokenError() {
-
-            }
         });
+    }
+
+    public void getHotArticles(){
+        List<String> hotList = Arrays.asList("自定义View", "Tab", "WebView", "图片加载", "相机",
+                "图表", "列表", "数据库", "蓝牙", "视频", "网络请求", "人脸识别", "OpenGL", "Canvas", "音频", "完整项目");
+        hotLiveData.setValue(hotList);
     }
 
     public void query(String page, String size, String query) {
@@ -81,11 +79,6 @@ public class ArticleRepository extends BaseRepository {
             @Override
             public void onFailer(String msg) {
                 Log.e("onFailer", "onFailer: ");
-            }
-
-            @Override
-            public void onTokenError() {
-
             }
         });
     }

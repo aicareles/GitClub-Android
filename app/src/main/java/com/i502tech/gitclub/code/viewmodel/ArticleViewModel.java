@@ -34,6 +34,11 @@ public class ArticleViewModel extends ViewModel {
         return this;
     }
 
+    public ArticleViewModel getHotArticle(){
+        articleRepository.getHotArticles();
+        return this;
+    }
+
     public void query(String page, String size, String query) {
         articleRepository.query(page, size, query);
     }
@@ -44,6 +49,10 @@ public class ArticleViewModel extends ViewModel {
 
     public MutableLiveData<Integer> getSumLiveData() {
         return articleRepository.sumLiveData;
+    }
+
+    public MutableLiveData<List<String>> getHotLiveData() {
+        return articleRepository.hotLiveData;
     }
 
     public MutableLiveData<List<Article>> getQueryLiveData() {

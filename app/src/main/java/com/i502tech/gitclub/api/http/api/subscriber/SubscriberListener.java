@@ -1,7 +1,7 @@
 package com.i502tech.gitclub.api.http.api.subscriber;
 
-public interface SubscriberListener<T> {
-    void onSuccess(T t);
-    void onFailer(String msg);
-    void onTokenError();
+public abstract class SubscriberListener<T> {
+    public abstract void onSuccess(T t);
+    public abstract void onFailer(String msg);
+    public void onTokenError(){};
 }
