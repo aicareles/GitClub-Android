@@ -16,7 +16,7 @@ import com.i502tech.gitclub.R;
 import com.i502tech.gitclub.base.BaseActivity;
 import com.i502tech.gitclub.code.adapter.ArticleAdapter;
 import com.i502tech.gitclub.code.bean.Article;
-import com.i502tech.gitclub.code.bean.User;
+import com.i502tech.gitclub.code.repository.ArticleRepository;
 import com.i502tech.gitclub.code.viewmodel.ArticleViewModel;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;

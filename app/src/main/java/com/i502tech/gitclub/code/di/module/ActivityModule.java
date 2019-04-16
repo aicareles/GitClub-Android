@@ -36,11 +36,13 @@ public class ActivityModule {
     }
 
     @Provides
+    @ActivityScope
     UserRepository providesUserRepository(){
         return new UserRepository();
     }
 
     @Provides
+    @ActivityScope
     ArticleRepository providesArticleRepository(){
         return new ArticleRepository();
     }
