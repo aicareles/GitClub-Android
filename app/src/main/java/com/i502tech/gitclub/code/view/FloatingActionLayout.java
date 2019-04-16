@@ -1,6 +1,7 @@
 package com.i502tech.gitclub.code.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -11,6 +12,7 @@ import android.view.animation.AnimationUtils;
 
 import com.github.clans.fab.FloatingActionMenu;
 import com.i502tech.gitclub.R;
+import com.i502tech.gitclub.code.activity.MyActivity;
 import com.i502tech.gitclub.utils.ToastUtil;
 import com.i502tech.gitclub.widget.BaseFrameLayout;
 
@@ -28,6 +30,7 @@ public class FloatingActionLayout extends BaseFrameLayout {
     @BindView(R.id.fb_menu)
     FloatingActionMenu fbMenu;
     private Unbinder unbinder;
+    private Context mContext;
 
     public FloatingActionLayout(@NonNull Context context) {
         super(context);
@@ -44,6 +47,7 @@ public class FloatingActionLayout extends BaseFrameLayout {
     @Override
     protected void bindLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         LayoutInflater.from(context).inflate(R.layout.layout_fb, this, true);
+        this.mContext = context;
         unbinder = ButterKnife.bind(this);
         initView();
     }
@@ -58,7 +62,7 @@ public class FloatingActionLayout extends BaseFrameLayout {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fb_person:
-                ToastUtil.show("点击了我的");
+                mContext.startActivity(new Intent(mContext, MyActivity.class));
                 break;
             case R.id.fb_submission:
                 ToastUtil.show("点击了投稿");

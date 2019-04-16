@@ -43,6 +43,15 @@ public class ArticleViewModel extends ViewModel {
         articleRepository.query(page, size, query);
     }
 
+    public ArticleViewModel getTypeArticles(int type, String page, String size, String user_id){
+        if (type == 0){
+            articleRepository.getMyStarArticles(page, size, user_id);
+        }else {
+            articleRepository.getMyContributeArticles(page, size, user_id);
+        }
+        return this;
+    }
+
     public MutableLiveData<List<Article>> getArticleLiveData() {
         return articleRepository.articleLiveData;
     }
@@ -57,5 +66,9 @@ public class ArticleViewModel extends ViewModel {
 
     public MutableLiveData<List<Article>> getQueryLiveData() {
         return articleRepository.queryLiveData;
+    }
+
+    public MutableLiveData<List<Article>> getTypeLiveData() {
+        return articleRepository.articleTypeLiveData;
     }
 }

@@ -27,6 +27,7 @@ public class ArticleRepository extends BaseRepository {
     public MutableLiveData<Integer> sumLiveData = new MutableLiveData<>();
     public MutableLiveData<List<String>> hotLiveData = new MutableLiveData<>();
     public MutableLiveData<List<Article>> queryLiveData = new MutableLiveData<>();
+    public MutableLiveData<List<Article>> articleTypeLiveData = new MutableLiveData<>();
 
     public void getArticleList(String page, String size) {
         Map<String, String> map = new HashMap<>();
@@ -74,6 +75,42 @@ public class ArticleRepository extends BaseRepository {
             @Override
             public void onSuccess(BaseResponse<List<Article>> userBaseResponse) {
                 queryLiveData.setValue(userBaseResponse.data);
+            }
+
+            @Override
+            public void onFailer(String msg) {
+                Log.e("onFailer", "onFailer: ");
+            }
+        });
+    }
+
+    public void getMyStarArticles(String page, String size, String user_id){
+        Map<String, String> map = new HashMap<>();
+        map.put("page", page);
+        map.put("size", size);
+        map.put("user_id", user_id);
+        HttpUtils.ApiFunc(RetrofitManager.mApiService.getMyStarArticles(map), new SubscriberListener<BaseResponse<List<Article>>>() {
+            @Override
+            public void onSuccess(BaseResponse<List<Article>> userBaseResponse) {
+                articleTypeLiveData.setValue(userBaseResponse.data);
+            }
+
+            @Override
+            public void onFailer(String msg) {
+                Log.e("onFailer", "onFailer: ");
+            }
+        });
+    }
+
+    public void getMyContributeArticles(String page, String size, String user_id){
+        Map<String, String> map = new HashMap<>();
+        map.put("page", page);
+        map.put("size", size);
+        map.put("user_id", user_id);
+        HttpUtils.ApiFunc(RetrofitManager.mApiService.getMyContributeArticles(map), new SubscriberListener<BaseResponse<List<Article>>>() {
+            @Override
+            public void onSuccess(BaseResponse<List<Article>> userBaseResponse) {
+                articleTypeLiveData.setValue(userBaseResponse.data);
             }
 
             @Override

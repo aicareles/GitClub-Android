@@ -59,6 +59,7 @@ public abstract class BaseFragment extends Fragment {
         }
         bindData();
         bindListener();
+        dataObserver();
         return mRootView;
     }
 
@@ -72,6 +73,8 @@ public abstract class BaseFragment extends Fragment {
     protected abstract void bindData();
 
     protected abstract void bindListener();
+
+    protected void dataObserver() {}
 
     public ActivityComponent getActivityComponent() {
         return mActivityComponent;

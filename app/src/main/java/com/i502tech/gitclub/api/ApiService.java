@@ -37,4 +37,14 @@ public interface ApiService {
     @POST("query")
     Observable<BaseResponse<List<Article>>> query(@FieldMap Map<String, String> map);
 
+    //我的点赞(收藏)文章列表
+    @FormUrlEncoded
+    @POST("getMyStarArticles")
+    Observable<BaseResponse<List<Article>>> getMyStarArticles(@FieldMap Map<String, String> map);
+
+    //获取我贡献的文章列表
+    @FormUrlEncoded
+    @POST("getMyContributeArticles")
+    Observable<BaseResponse<List<Article>>> getMyContributeArticles(@FieldMap Map<String, String> map);
+
 }
