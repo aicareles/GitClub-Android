@@ -1,5 +1,6 @@
 package com.i502tech.gitclub.code.di.component;
 
+import com.i502tech.gitclub.code.activity.LoginActivity;
 import com.i502tech.gitclub.code.activity.MainActivity;
 import com.i502tech.gitclub.code.activity.MyActivity;
 import com.i502tech.gitclub.code.activity.SearchActivity;
@@ -20,4 +21,5 @@ public interface ActivityComponent {
     void inject(SearchActivity searchActivity);
     void inject(MyActivity myActivity);
     void inject(ArticleTypeFragment articleTypeFragment);
+    void inject(LoginActivity loginActivity);
 }

@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DesignDemo">
-        <activity android:name=".code.activity.MainActivity">
+        <activity android:name=".code.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".code.activity.SearchActivity" />
         <activity android:name=".code.activity.MyActivity" />
+        <activity android:name=".code.activity.MainActivity"
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>

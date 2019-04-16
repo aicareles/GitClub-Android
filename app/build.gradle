@@ -64,4 +64,8 @@ dependencies {
     implementation 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
 //    implementation 'com.github.wangjiegulu:ShadowViewHelper:1.0.0'
+
+    //AptPreferences是基于面向对象设计的快速持久化框架
+    implementation 'com.github.joyrun.AptPreferences:aptpreferences:0.9.5'
+    annotationProcessor 'com.github.joyrun.AptPreferences:aptpreferences-compiler:0.9.5'
 }

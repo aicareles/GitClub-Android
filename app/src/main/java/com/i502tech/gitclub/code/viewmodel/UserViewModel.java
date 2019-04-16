@@ -15,15 +15,20 @@ import javax.inject.Inject;
  */
 public class UserViewModel extends ViewModel {
     private LiveData<User> user;
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Inject
     public UserViewModel(UserRepository repository) {
         this.userRepository = repository;
     }
 
-    public void login(String nickName, String password) {
-        user = userRepository.login(nickName, password);
+    public UserViewModel loginRegister(String type, String nickName, String password) {
+        if (type.equals("登录")){
+            user = userRepository.login(nickName, password);
+        }else {
+            user = userRepository.register(nickName, password);
+        }
+        return this;
     }
 
     public LiveData<User> getUser() {

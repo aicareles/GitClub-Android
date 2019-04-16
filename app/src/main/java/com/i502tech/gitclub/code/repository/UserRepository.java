@@ -48,4 +48,28 @@ public class UserRepository {
         });
         return data;
     }
+
+    public LiveData<User> register(String username, String password){
+        final MutableLiveData<User> data = new MutableLiveData<>();
+        Map<String, String> map = new HashMap<>();
+        map.put("username", username);
+        map.put("password", password);
+        HttpUtils.ApiFunc(RetrofitManager.mApiService.login(map), new SubscriberListener<BaseResponse<User>>() {
+            @Override
+            public void onSuccess(BaseResponse<User> userBaseResponse) {
+                data.setValue(userBaseResponse.data);
+            }
+
+            @Override
+            public void onFailer(String msg) {
+                Log.e("onFailer", "onFailer: ");
+            }
+
+            @Override
+            public void onTokenError() {
+
+            }
+        });
+        return data;
+    }
 }
