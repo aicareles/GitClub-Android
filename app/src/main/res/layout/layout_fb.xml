@@ -22,7 +22,7 @@
             style="@style/MenuButtonsStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/ic_person"
             fab:fab_label="我的" />
 
         <com.github.clans.fab.FloatingActionButton
@@ -30,7 +30,7 @@
             style="@style/MenuButtonsStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/ic_add"
             fab:fab_label="投稿" />
 
     </com.github.clans.fab.FloatingActionMenu>

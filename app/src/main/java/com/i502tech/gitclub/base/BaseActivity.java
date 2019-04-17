@@ -81,7 +81,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 初始化依赖注入
      */
-    protected abstract void initInject();
+    protected void initInject(){}
 
     protected abstract void bindData();
 
