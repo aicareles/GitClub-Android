@@ -13,8 +13,8 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.roundview.RoundTextView;
 import com.i502tech.gitclub.R;
-import com.i502tech.gitclub.api.http.api.BaseResponse;
 import com.i502tech.gitclub.base.BaseActivity;
+import com.i502tech.gitclub.base.mvvm.Resource;
 import com.i502tech.gitclub.code.adapter.ArticleAdapter;
 import com.i502tech.gitclub.code.bean.Article;
 import com.i502tech.gitclub.code.viewmodel.ArticleViewModel;
@@ -81,18 +81,15 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     protected void dataObserver() {
-        articleViewModel.getQueryLiveData().observe(this, new Observer<BaseResponse<List<Article>>>() {
-            @Override
-            public void onChanged(@Nullable BaseResponse<List<Article>> listBaseResponse) {
-                if (listBaseResponse.isSuccess()){
-                    if (page == 0) {
-                        mAdapter.setNewData(listBaseResponse.data);
-                    }else {
-                        mAdapter.addData(listBaseResponse.data);
-                    }
+        articleViewModel.getQueryLiveData().observe(this, resource -> {
+            if (resource.isSuccess()){
+                if (page == 0) {
+                    mAdapter.setNewData(resource.data);
                 }else {
-                    toast(listBaseResponse.msg);
+                    mAdapter.addData(resource.data);
                 }
+            }else {
+                toast(resource.msg);
             }
         });
     }
@@ -100,36 +97,27 @@ public class SearchActivity extends BaseActivity {
     @Override
     protected void bindListener() {
         super.bindListener();
-        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                page++;
-                articleViewModel.query(String.valueOf(page), String.valueOf(10), searchEdit.getText().toString());
-            }
+        mAdapter.setOnLoadMoreListener(() -> {
+            page++;
+            articleViewModel.query(String.valueOf(page), String.valueOf(10), searchEdit.getText().toString());
         }, recyclerview);
 
-        searchEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    //关闭软键盘
-                    hideSoftKeyboard();
-                    flowLayout.setVisibility(View.GONE);
-                    articleViewModel.query(String.valueOf(page), String.valueOf(10), searchEdit.getText().toString());
-                    return true;
-                }
-                return false;
-            }
-        });
-        flowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
-            @Override
-            public boolean onTagClick(View view, int position, FlowLayout parent) {
+        searchEdit.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                //关闭软键盘
+                hideSoftKeyboard();
                 flowLayout.setVisibility(View.GONE);
-                searchEdit.setText(tagAdapter.getItem(position));
-                page = 0;
                 articleViewModel.query(String.valueOf(page), String.valueOf(10), searchEdit.getText().toString());
                 return true;
             }
+            return false;
+        });
+        flowLayout.setOnTagClickListener((view, position, parent) -> {
+            flowLayout.setVisibility(View.GONE);
+            searchEdit.setText(tagAdapter.getItem(position));
+            page = 0;
+            articleViewModel.query(String.valueOf(page), String.valueOf(10), searchEdit.getText().toString());
+            return true;
         });
     }
 

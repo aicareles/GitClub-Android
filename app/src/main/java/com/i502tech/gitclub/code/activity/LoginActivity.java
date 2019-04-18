@@ -14,6 +14,7 @@ import com.i502tech.gitclub.R;
 import com.i502tech.gitclub.api.http.api.BaseResponse;
 import com.i502tech.gitclub.app.SettingsPreferences;
 import com.i502tech.gitclub.base.BaseActivity;
+import com.i502tech.gitclub.base.mvvm.Resource;
 import com.i502tech.gitclub.code.bean.User;
 import com.i502tech.gitclub.code.viewmodel.UserViewModel;
 import com.i502tech.gitclub.utils.BeanUtils;
@@ -74,17 +75,14 @@ public class LoginActivity extends BaseActivity {
                 }
                 userViewModel.loginRegister(btnLogin.getText().toString(), etCount.getText().toString(), etPassward.getText().toString())
                         .getUser()
-                        .observe(this, new Observer<BaseResponse<User>>() {
-                            @Override
-                            public void onChanged(@Nullable BaseResponse<User> response) {
-                                if (response.isSuccess()){
-                                    BeanUtils.copyProperties(response.data, userInfo);
-                                    SettingsPreferences.get().setUser(response.data);
-                                    toActivity(MainActivity.class);
-                                    finish();
-                                }else {
-                                    toast(response.msg);
-                                }
+                        .observe(this, resource -> {
+                            if (resource.isSuccess()){
+                                BeanUtils.copyProperties(resource.data, userInfo);
+                                SettingsPreferences.get().setUser(resource.data);
+                                toActivity(MainActivity.class);
+                                finish();
+                            }else {
+                                toast(resource.msg);
                             }
                         });
                 break;

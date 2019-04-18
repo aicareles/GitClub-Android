@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.i502tech.gitclub.R;
 import com.i502tech.gitclub.api.http.api.BaseResponse;
 import com.i502tech.gitclub.base.BaseActivity;
+import com.i502tech.gitclub.base.mvvm.Resource;
 import com.i502tech.gitclub.code.adapter.ArticleAdapter;
 import com.i502tech.gitclub.code.bean.Article;
 import com.i502tech.gitclub.code.view.FloatingActionLayout;
@@ -66,48 +67,38 @@ public class MainActivity extends BaseActivity {
     protected void dataObserver() {
         articleViewModel.getArticleList("0","10")
                 .getArticleLiveData()
-                .observe(this, new Observer<BaseResponse<List<Article>>>() {
-            @Override
-            public void onChanged(@Nullable BaseResponse<List<Article>> response) {
-                if (response.isSuccess()){
-                    if (page == 0) {
-                        refreshlayout.setRefreshing(false);
-                        mAdapter.setNewData(response.data);
+                .observe(this, response -> {
+                    refreshlayout.setRefreshing(false);
+                    if (response.isSuccess()){
+                        if (page == 0) {
+                            mAdapter.setNewData(response.data);
+                        }else {
+                            mAdapter.addData(response.data);
+                        }
                     }else {
-                        mAdapter.addData(response.data);
+                        toast(response.msg);
                     }
-                }else {
-                    toast(response.msg);
-                }
-            }
-        });
+                });
         articleViewModel.getArticleTotals()
                 .getSumLiveData()
-                .observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(@Nullable Integer integer) {
-                tvNum.setText("点击搜索，已收录" + integer + "个开源项目");
-            }
-        });
+                .observe(this, resource -> {
+                    if (resource.isSuccess()){
+                        tvNum.setText(new StringBuilder().append("点击搜索，已收录").append(resource.data).append("个开源项目"));
+                    }
+                });
     }
 
     @Override
     protected void bindListener() {
         super.bindListener();
-        refreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                page = 0;
-                articleViewModel.getArticleTotals();
-                articleViewModel.getArticleList(String.valueOf(page), String.valueOf(10));
-            }
+        refreshlayout.setOnRefreshListener(() -> {
+            page = 0;
+            articleViewModel.getArticleTotals();
+            articleViewModel.getArticleList(String.valueOf(page), String.valueOf(10));
         });
-        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                page++;
-                articleViewModel.getArticleList(String.valueOf(page), String.valueOf(10));
-            }
+        mAdapter.setOnLoadMoreListener(() -> {
+            page++;
+            articleViewModel.getArticleList(String.valueOf(page), String.valueOf(10));
         }, recyclerview);
     }
 

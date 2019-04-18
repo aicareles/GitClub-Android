@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.i502tech.gitclub.api.http.ResultException;
 import com.i502tech.gitclub.api.http.api.BaseResponse;
+import com.i502tech.gitclub.base.mvvm.Resource;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -22,12 +23,11 @@ public class BaseSubscriber<T> implements Observer<BaseResponse<T>> {
 
     private static final String TAG = "BaseSubscriber";
 
-    private ResponseListener<BaseResponse<T>> mListener;
-    private  BaseResponse<T> mResponse = new BaseResponse<>();
+    private ResponseListener<Resource<T>> mListener;
     //用于取消连接
     private Disposable mDisposeable;
 
-    public BaseSubscriber(ResponseListener<BaseResponse<T>> listener) {
+    public BaseSubscriber(ResponseListener<Resource<T>> listener) {
         this.mListener = listener;
     }
 
@@ -41,8 +41,7 @@ public class BaseSubscriber<T> implements Observer<BaseResponse<T>> {
         } else if (e instanceof ResultException) {
             msg = ((ResultException) e).getMsg();
         }
-        mResponse.setMsg(msg);
-        mListener.onResponse(mResponse);
+        mListener.onResponse(Resource.<T>error(msg));
     }
 
     @Override
@@ -59,7 +58,11 @@ public class BaseSubscriber<T> implements Observer<BaseResponse<T>> {
     @Override
     public void onNext(BaseResponse<T> response) {
         if (mListener != null) {
-            mListener.onResponse(response);
+            if (response.isSuccess()) {
+                mListener.onResponse(Resource.success(response.data));
+            } else {
+                mListener.onResponse(Resource.<T>error(response.msg));
+            }
         }
     }
 

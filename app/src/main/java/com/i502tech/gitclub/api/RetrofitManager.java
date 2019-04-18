@@ -5,6 +5,7 @@ import com.i502tech.gitclub.api.http.api.BaseResponse;
 import com.i502tech.gitclub.api.http.api.subscriber.BaseSubscriber;
 import com.i502tech.gitclub.api.http.api.subscriber.ResponseListener;
 import com.i502tech.gitclub.app.C;
+import com.i502tech.gitclub.base.mvvm.Resource;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -73,7 +74,7 @@ public class RetrofitManager {
                 .subscribe(observer);
     }
 
-    public static <T> void ApiFunc(Observable<BaseResponse<T>> observable, ResponseListener<BaseResponse<T>> listener) {
+    public static <T> void ApiFunc(Observable<BaseResponse<T>> observable, ResponseListener<Resource<T>> listener) {
         request(observable,new BaseSubscriber<T>(listener));
     }
 

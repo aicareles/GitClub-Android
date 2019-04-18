@@ -9,6 +9,7 @@ import com.i502tech.gitclub.api.RetrofitManager;
 import com.i502tech.gitclub.api.http.api.BaseResponse;
 import com.i502tech.gitclub.api.http.api.subscriber.ResponseListener;
 import com.i502tech.gitclub.api.http.api.subscriber.SubscriberListener;
+import com.i502tech.gitclub.base.mvvm.Resource;
 import com.i502tech.gitclub.code.bean.User;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,31 +27,21 @@ public class UserRepository {
 //    @Inject
 //    public UserRepository(){}  //此方式不需要module
 
-    public LiveData<BaseResponse<User>> login(String nickName, String password){
-        final MutableLiveData<BaseResponse<User>> data = new MutableLiveData<>();
+    public LiveData<Resource<User>> login(String nickName, String password){
+        final MutableLiveData<Resource<User>> data = new MutableLiveData<>();
         Map<String, String> map = new HashMap<>();
         map.put("userName", nickName);
         map.put("password", password);
-        HttpUtils.ApiFunc(RetrofitManager.mApiService.login(map), new ResponseListener<BaseResponse<User>>() {
-            @Override
-            public void onResponse(BaseResponse<User> response) {
-                data.setValue(response);
-            }
-        });
+        HttpUtils.ApiFunc(RetrofitManager.mApiService.login(map), response -> data.setValue(response));
         return data;
     }
 
-    public LiveData<BaseResponse<User>> register(String username, String password){
-        final MutableLiveData<BaseResponse<User>> data = new MutableLiveData<>();
+    public LiveData<Resource<User>> register(String username, String password){
+        final MutableLiveData<Resource<User>> data = new MutableLiveData<>();
         Map<String, String> map = new HashMap<>();
         map.put("username", username);
         map.put("password", password);
-        HttpUtils.ApiFunc(RetrofitManager.mApiService.login(map), new ResponseListener<BaseResponse<User>>() {
-            @Override
-            public void onResponse(BaseResponse<User> response) {
-                data.setValue(response);
-            }
-        });
+        HttpUtils.ApiFunc(RetrofitManager.mApiService.login(map), response -> data.setValue(response));
         return data;
     }
 }

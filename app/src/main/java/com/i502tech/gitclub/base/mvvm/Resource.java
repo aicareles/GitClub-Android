@@ -12,20 +12,24 @@ public class Resource<T> {
     public final Status status;
     @Nullable
     public final T data;
-    @Nullable public final String message;
+    @Nullable public final String msg;
     private Resource(@NonNull Status status, @Nullable T data,
-                     @Nullable String message) {
+                     @Nullable String msg) {
         this.status = status;
         this.data = data;
-        this.message = message;
+        this.msg = msg;
+    }
+
+    public boolean isSuccess(){
+        return status == Status.SUCCESS;
     }
 
     public static <T> Resource<T> success(@NonNull T data) {
         return new Resource<>(Status.SUCCESS, data, null);
     }
 
-    public static <T> Resource<T> error(String msg, @Nullable T data) {
-        return new Resource<>(Status.ERROR, data, msg);
+    public static <T> Resource<T> error(String msg) {
+        return new Resource<>(Status.ERROR, null, msg);
     }
 
     public static <T> Resource<T> loading(@Nullable T data) {

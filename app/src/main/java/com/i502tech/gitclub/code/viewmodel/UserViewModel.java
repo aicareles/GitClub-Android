@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
 import com.i502tech.gitclub.api.http.api.BaseResponse;
+import com.i502tech.gitclub.base.mvvm.Resource;
 import com.i502tech.gitclub.code.bean.User;
 import com.i502tech.gitclub.code.repository.UserRepository;
 
@@ -15,7 +16,7 @@ import javax.inject.Inject;
  * created by jerry on 2019/4/11.
  */
 public class UserViewModel extends ViewModel {
-    private LiveData<BaseResponse<User>> user;
+    private LiveData<Resource<User>> user;
     private UserRepository userRepository;
 
     @Inject
@@ -32,7 +33,7 @@ public class UserViewModel extends ViewModel {
         return this;
     }
 
-    public LiveData<BaseResponse<User>> getUser() {
+    public LiveData<Resource<User>> getUser() {
         return user;
     }
 }

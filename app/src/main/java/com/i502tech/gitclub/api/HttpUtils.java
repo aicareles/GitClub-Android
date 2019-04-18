@@ -4,6 +4,7 @@ package com.i502tech.gitclub.api;
 import com.i502tech.gitclub.api.http.api.BaseResponse;
 import com.i502tech.gitclub.api.http.api.subscriber.BaseSubscriber;
 import com.i502tech.gitclub.api.http.api.subscriber.ResponseListener;
+import com.i502tech.gitclub.base.mvvm.Resource;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -35,7 +36,7 @@ public class HttpUtils {
      * @param listener 观察者，这里是监听回调
      * @param <T> basebean中的泛型bean，指data
      */
-    public static <T> void ApiFunc(Observable<BaseResponse<T>> observable, ResponseListener<BaseResponse<T>> listener) {
+    public static <T> void ApiFunc(Observable<BaseResponse<T>> observable, ResponseListener<Resource<T>> listener) {
         request(observable,new BaseSubscriber<T>(listener));
     }
 

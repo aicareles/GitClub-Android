@@ -5,14 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.i502tech.gitclub.R;
-import com.i502tech.gitclub.api.http.api.BaseResponse;
 import com.i502tech.gitclub.base.BaseFragment;
-import com.i502tech.gitclub.code.activity.MyActivity;
+import com.i502tech.gitclub.base.mvvm.Resource;
 import com.i502tech.gitclub.code.adapter.ArticleTypeAdapter;
 import com.i502tech.gitclub.code.bean.Article;
 import com.i502tech.gitclub.code.viewmodel.ArticleViewModel;
@@ -74,18 +70,15 @@ public class ArticleTypeFragment extends BaseFragment {
         super.dataObserver();
         articleViewModel.getTypeArticles(mType, String.valueOf(page), String.valueOf("10"), String.valueOf("3"))
                 .getTypeLiveData()
-                .observe(this, new Observer<BaseResponse<List<Article>>>() {
-                    @Override
-                    public void onChanged(@Nullable BaseResponse<List<Article>> response) {
-                        if (response.isSuccess()){
-                            if (page == 0) {
-                                mAdapter.setNewData(response.data);
-                            }else {
-                                mAdapter.addData(response.data);
-                            }
+                .observe(this, response -> {
+                    if (response.isSuccess()){
+                        if (page == 0) {
+                            mAdapter.setNewData(response.data);
                         }else {
-                            ToastUtil.show(response.msg);
+                            mAdapter.addData(response.data);
                         }
+                    }else {
+                        ToastUtil.show(response.msg);
                     }
                 });
     }
