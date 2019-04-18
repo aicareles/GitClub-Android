@@ -4,6 +4,7 @@ package com.i502tech.gitclub.code.viewmodel;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.i502tech.gitclub.api.http.api.BaseResponse;
 import com.i502tech.gitclub.code.bean.Article;
 import com.i502tech.gitclub.code.repository.ArticleRepository;
 
@@ -34,11 +35,6 @@ public class ArticleViewModel extends ViewModel {
         return this;
     }
 
-    public ArticleViewModel getHotArticle(){
-        articleRepository.getHotArticles();
-        return this;
-    }
-
     public void query(String page, String size, String query) {
         articleRepository.query(page, size, query);
     }
@@ -52,7 +48,7 @@ public class ArticleViewModel extends ViewModel {
         return this;
     }
 
-    public MutableLiveData<List<Article>> getArticleLiveData() {
+    public MutableLiveData<BaseResponse<List<Article>>> getArticleLiveData() {
         return articleRepository.articleLiveData;
     }
 
@@ -60,15 +56,11 @@ public class ArticleViewModel extends ViewModel {
         return articleRepository.sumLiveData;
     }
 
-    public MutableLiveData<List<String>> getHotLiveData() {
-        return articleRepository.hotLiveData;
-    }
-
-    public MutableLiveData<List<Article>> getQueryLiveData() {
+    public MutableLiveData<BaseResponse<List<Article>>> getQueryLiveData() {
         return articleRepository.queryLiveData;
     }
 
-    public MutableLiveData<List<Article>> getTypeLiveData() {
+    public MutableLiveData<BaseResponse<List<Article>>> getTypeLiveData() {
         return articleRepository.articleTypeLiveData;
     }
 }

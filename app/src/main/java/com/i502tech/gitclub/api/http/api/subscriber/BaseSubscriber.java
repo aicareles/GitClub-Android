@@ -7,6 +7,7 @@ import com.i502tech.gitclub.api.http.api.BaseResponse;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.util.Objects;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -17,15 +18,16 @@ import retrofit2.HttpException;
  *
  * @param <T>
  */
-public class BeanSubscriber<T> implements Observer<BaseResponse<T>> {
+public class BaseSubscriber<T> implements Observer<BaseResponse<T>> {
 
     private static final String TAG = "BaseSubscriber";
 
-    private SubscriberListener<BaseResponse<T>> mListener;
+    private ResponseListener<BaseResponse<T>> mListener;
+    private  BaseResponse<T> mResponse = new BaseResponse<>();
     //用于取消连接
     private Disposable mDisposeable;
 
-    public BeanSubscriber(SubscriberListener<BaseResponse<T>> listener) {
+    public BaseSubscriber(ResponseListener<BaseResponse<T>> listener) {
         this.mListener = listener;
     }
 
@@ -39,7 +41,8 @@ public class BeanSubscriber<T> implements Observer<BaseResponse<T>> {
         } else if (e instanceof ResultException) {
             msg = ((ResultException) e).getMsg();
         }
-        mListener.onFailer(msg);
+        mResponse.setMsg(msg);
+        mListener.onResponse(mResponse);
     }
 
     @Override
@@ -56,14 +59,7 @@ public class BeanSubscriber<T> implements Observer<BaseResponse<T>> {
     @Override
     public void onNext(BaseResponse<T> response) {
         if (mListener != null) {
-            if (response.isSuccess()) {
-                mListener.onSuccess(response);
-            } else if (response.isTokenFail()) {
-                mListener.onFailer(response.getMsg());
-                mListener.onTokenError();
-            } else {
-                mListener.onFailer(response.getMsg());
-            }
+            mListener.onResponse(response);
         }
     }
 

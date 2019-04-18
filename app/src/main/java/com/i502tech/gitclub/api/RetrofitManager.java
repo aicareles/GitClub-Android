@@ -2,11 +2,9 @@ package com.i502tech.gitclub.api;
 
 
 import com.i502tech.gitclub.api.http.api.BaseResponse;
-import com.i502tech.gitclub.api.http.api.subscriber.BeanSubscriber;
-import com.i502tech.gitclub.api.http.api.subscriber.SubscriberListener;
+import com.i502tech.gitclub.api.http.api.subscriber.BaseSubscriber;
+import com.i502tech.gitclub.api.http.api.subscriber.ResponseListener;
 import com.i502tech.gitclub.app.C;
-
-import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -75,8 +73,8 @@ public class RetrofitManager {
                 .subscribe(observer);
     }
 
-    public static <T> void ApiFunc(Observable<BaseResponse<T>> observable, SubscriberListener<BaseResponse<T>> listener) {
-        request(observable,new BeanSubscriber<T>(listener));
+    public static <T> void ApiFunc(Observable<BaseResponse<T>> observable, ResponseListener<BaseResponse<T>> listener) {
+        request(observable,new BaseSubscriber<T>(listener));
     }
 
 

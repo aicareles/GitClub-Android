@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.roundview.RoundTextView;
 import com.i502tech.gitclub.R;
+import com.i502tech.gitclub.api.http.api.BaseResponse;
 import com.i502tech.gitclub.base.BaseActivity;
 import com.i502tech.gitclub.code.adapter.ArticleAdapter;
 import com.i502tech.gitclub.code.bean.Article;
@@ -22,6 +23,7 @@ import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -42,7 +44,6 @@ public class SearchActivity extends BaseActivity {
     @Inject
     ArticleViewModel articleViewModel;
 
-    private ArrayList<String> hotList;
     TagAdapter<String> tagAdapter;
     private ArticleAdapter mAdapter;
     private int page = 0;
@@ -60,11 +61,12 @@ public class SearchActivity extends BaseActivity {
     @Override
     protected void bindData() {
         setTitle("搜索");
-        mAdapter = new ArticleAdapter(articleViewModel.getQueryLiveData().getValue(), this);
+        mAdapter = new ArticleAdapter(new ArrayList<Article>(), this);
         recyclerview.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         recyclerview.setAdapter(mAdapter);
 
-        hotList = new ArrayList<>();
+        final List<String> hotList = Arrays.asList("自定义View", "Tab", "WebView", "图片加载", "相机",
+                "图表", "列表", "数据库", "蓝牙", "视频", "网络请求", "人脸识别", "OpenGL", "Canvas", "音频", "完整项目");
         tagAdapter = new TagAdapter<String>(hotList) {
             @Override
             public View getView(FlowLayout parent, int position, String s) {
@@ -79,21 +81,18 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     protected void dataObserver() {
-        articleViewModel.getQueryLiveData().observe(this, new Observer<List<Article>>() {
+        articleViewModel.getQueryLiveData().observe(this, new Observer<BaseResponse<List<Article>>>() {
             @Override
-            public void onChanged(@Nullable List<Article> articles) {
-                if (page == 0) {
-                    mAdapter.setNewData(articles);
+            public void onChanged(@Nullable BaseResponse<List<Article>> listBaseResponse) {
+                if (listBaseResponse.isSuccess()){
+                    if (page == 0) {
+                        mAdapter.setNewData(listBaseResponse.data);
+                    }else {
+                        mAdapter.addData(listBaseResponse.data);
+                    }
                 }else {
-                    mAdapter.addData(articles);
+                    toast(listBaseResponse.msg);
                 }
-            }
-        });
-        articleViewModel.getHotArticle().getHotLiveData().observe(this, new Observer<List<String>>() {
-            @Override
-            public void onChanged(@Nullable List<String> strings) {
-                hotList.addAll(strings);
-                tagAdapter.notifyDataChanged();
             }
         });
     }

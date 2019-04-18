@@ -4,7 +4,6 @@ package com.i502tech.gitclub.base;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -15,9 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -25,18 +22,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.i502tech.gitclub.App;
 import com.i502tech.gitclub.R;
 import com.i502tech.gitclub.app.language.LanguageUtil;
-import com.i502tech.gitclub.code.di.component.ActivityComponent;
-import com.i502tech.gitclub.code.di.component.DaggerActivityComponent;
-import com.i502tech.gitclub.code.di.module.ActivityModule;
-import com.i502tech.gitclub.code.event.LiveBus;
+import com.i502tech.gitclub.base.mvvm.AbsLifecycleActivity;
 import com.i502tech.gitclub.utils.GlobalStatusBarUtil;
 import com.i502tech.gitclub.utils.ToastUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -47,14 +37,12 @@ import butterknife.Unbinder;
  * Time: 23:28
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AbsLifecycleActivity {
 
     public Toolbar toolbar;
     public TextView abTitle;
     private AlertDialog mConnectDialog;
     private Unbinder unbind;
-    private ActivityComponent mActivityComponent;
-    private List<Object> eventKeys = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +53,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(layoutId());
         GlobalStatusBarUtil.setFitsSystemWindows(this, true);
         initToolBar();
-        mActivityComponent = DaggerActivityComponent.builder()
-                .activityModule(new ActivityModule(this))
-                .applicationComponent(App.getInstance().getApplicationComponent())
-                .build();
-        initInject();
-        dataObserver();
         unbind = ButterKnife.bind(this);
         bindData();
         bindListener();
@@ -78,51 +60,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract int layoutId();
 
-    /**
-     * 初始化依赖注入
-     */
-    protected void initInject(){}
-
     protected abstract void bindData();
 
-    protected void dataObserver() {}
-
     protected void bindListener(){}
-
-    public ActivityComponent getActivityComponent() {
-        return mActivityComponent;
-    }
-
-    protected <T> MutableLiveData<T> registerObserver(Object eventKey, Class<T> tClass) {
-
-        return registerObserver(eventKey, null, tClass);
-    }
-
-    protected <T> MutableLiveData<T> registerObserver(Object eventKey, String tag, Class<T> tClass) {
-        String event;
-        if (TextUtils.isEmpty(tag)) {
-            event = (String) eventKey;
-        } else {
-            event = eventKey + tag;
-        }
-        eventKeys.add(event);
-        return LiveBus.getDefault().subscribe(eventKey, tag, tClass);
-    }
-
-    protected <T> MutableLiveData<T> registerObserver(Object eventKey, T t) {
-        eventKeys.add(eventKey);
-        return LiveBus.getDefault().subscribe(eventKey, null, t);
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unbind.unbind();
-        if (eventKeys != null && eventKeys.size() > 0) {
-            for (int i = 0; i < eventKeys.size(); i++) {
-                LiveBus.getDefault().clear(eventKeys.get(i));
-            }
-        }
     }
 
     protected void toActivity(@NonNull Class cl) {

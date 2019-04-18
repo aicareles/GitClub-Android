@@ -7,6 +7,7 @@ import android.util.Log;
 import com.i502tech.gitclub.api.HttpUtils;
 import com.i502tech.gitclub.api.RetrofitManager;
 import com.i502tech.gitclub.api.http.api.BaseResponse;
+import com.i502tech.gitclub.api.http.api.subscriber.ResponseListener;
 import com.i502tech.gitclub.api.http.api.subscriber.SubscriberListener;
 import com.i502tech.gitclub.code.bean.User;
 import java.util.HashMap;
@@ -25,49 +26,29 @@ public class UserRepository {
 //    @Inject
 //    public UserRepository(){}  //此方式不需要module
 
-    public LiveData<User> login(String nickName, String password){
-        final MutableLiveData<User> data = new MutableLiveData<>();
+    public LiveData<BaseResponse<User>> login(String nickName, String password){
+        final MutableLiveData<BaseResponse<User>> data = new MutableLiveData<>();
         Map<String, String> map = new HashMap<>();
         map.put("userName", nickName);
         map.put("password", password);
-        HttpUtils.ApiFunc(RetrofitManager.mApiService.login(map), new SubscriberListener<BaseResponse<User>>() {
+        HttpUtils.ApiFunc(RetrofitManager.mApiService.login(map), new ResponseListener<BaseResponse<User>>() {
             @Override
-            public void onSuccess(BaseResponse<User> userBaseResponse) {
-                data.setValue(userBaseResponse.data);
-            }
-
-            @Override
-            public void onFailer(String msg) {
-                Log.e("onFailer", "onFailer: ");
-            }
-
-            @Override
-            public void onTokenError() {
-
+            public void onResponse(BaseResponse<User> response) {
+                data.setValue(response);
             }
         });
         return data;
     }
 
-    public LiveData<User> register(String username, String password){
-        final MutableLiveData<User> data = new MutableLiveData<>();
+    public LiveData<BaseResponse<User>> register(String username, String password){
+        final MutableLiveData<BaseResponse<User>> data = new MutableLiveData<>();
         Map<String, String> map = new HashMap<>();
         map.put("username", username);
         map.put("password", password);
-        HttpUtils.ApiFunc(RetrofitManager.mApiService.login(map), new SubscriberListener<BaseResponse<User>>() {
+        HttpUtils.ApiFunc(RetrofitManager.mApiService.login(map), new ResponseListener<BaseResponse<User>>() {
             @Override
-            public void onSuccess(BaseResponse<User> userBaseResponse) {
-                data.setValue(userBaseResponse.data);
-            }
-
-            @Override
-            public void onFailer(String msg) {
-                Log.e("onFailer", "onFailer: ");
-            }
-
-            @Override
-            public void onTokenError() {
-
+            public void onResponse(BaseResponse<User> response) {
+                data.setValue(response);
             }
         });
         return data;

@@ -5,17 +5,20 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.i502tech.gitclub.R;
+import com.i502tech.gitclub.api.http.api.BaseResponse;
 import com.i502tech.gitclub.base.BaseActivity;
 import com.i502tech.gitclub.code.adapter.ArticleAdapter;
 import com.i502tech.gitclub.code.bean.Article;
 import com.i502tech.gitclub.code.view.FloatingActionLayout;
 import com.i502tech.gitclub.code.viewmodel.ArticleViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -54,7 +57,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void bindData() {
-        mAdapter = new ArticleAdapter(articleViewModel.getArticleLiveData().getValue(), this);
+        mAdapter = new ArticleAdapter(new ArrayList<Article>(), this);
         recyclerview.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         recyclerview.setAdapter(mAdapter);
     }
@@ -63,14 +66,18 @@ public class MainActivity extends BaseActivity {
     protected void dataObserver() {
         articleViewModel.getArticleList("0","10")
                 .getArticleLiveData()
-                .observe(this, new Observer<List<Article>>() {
+                .observe(this, new Observer<BaseResponse<List<Article>>>() {
             @Override
-            public void onChanged(@Nullable List<Article> articles) {
-                if (page == 0) {
-                    refreshlayout.setRefreshing(false);
-                    mAdapter.setNewData(articles);
+            public void onChanged(@Nullable BaseResponse<List<Article>> response) {
+                if (response.isSuccess()){
+                    if (page == 0) {
+                        refreshlayout.setRefreshing(false);
+                        mAdapter.setNewData(response.data);
+                    }else {
+                        mAdapter.addData(response.data);
+                    }
                 }else {
-                    mAdapter.addData(articles);
+                    toast(response.msg);
                 }
             }
         });
@@ -82,7 +89,6 @@ public class MainActivity extends BaseActivity {
                 tvNum.setText("点击搜索，已收录" + integer + "个开源项目");
             }
         });
-
     }
 
     @Override
@@ -92,6 +98,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onRefresh() {
                 page = 0;
+                articleViewModel.getArticleTotals();
                 articleViewModel.getArticleList(String.valueOf(page), String.valueOf(10));
             }
         });

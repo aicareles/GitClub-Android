@@ -1,4 +1,4 @@
-package com.i502tech.gitclub.base;
+package com.i502tech.gitclub.base.mvvm;
 
 import android.arch.lifecycle.ViewModel;
 

@@ -1,53 +1,26 @@
 package com.i502tech.gitclub.base;
 
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.i502tech.gitclub.App;
-import com.i502tech.gitclub.code.di.component.ActivityComponent;
-import com.i502tech.gitclub.code.di.component.DaggerActivityComponent;
-import com.i502tech.gitclub.code.di.module.ActivityModule;
+import com.i502tech.gitclub.base.mvvm.AbsLifecycleFragment;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-/**
- * Author: arze
- * Date: 2018/4/8
- * Time: 23:28
- */
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends AbsLifecycleFragment {
 
     protected View mRootView;
     private Unbinder mUnBinder;
-    private ActivityComponent mActivityComponent;
-    protected Context context;
-    protected Activity activity;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.context = getContext();
-        activity = getActivity();
-        mActivityComponent = DaggerActivityComponent.builder()
-                .activityModule(new ActivityModule((AppCompatActivity) activity))
-                .applicationComponent((App.getInstance().getApplicationComponent()))
-                .build();
-        initInject();
-    }
 
     @Nullable
     @Override
@@ -65,20 +38,11 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract int layoutId();
 
-    /**
-     * 初始化依赖注入
-     */
-    protected abstract void initInject();
-
     protected abstract void bindData();
 
     protected abstract void bindListener();
 
     protected void dataObserver() {}
-
-    public ActivityComponent getActivityComponent() {
-        return mActivityComponent;
-    }
 
     protected void toActivity(@NonNull Class cl) {
         startActivity(new Intent(getActivity(), cl));

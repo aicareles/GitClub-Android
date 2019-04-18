@@ -10,12 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.i502tech.gitclub.R;
+import com.i502tech.gitclub.api.http.api.BaseResponse;
 import com.i502tech.gitclub.base.BaseFragment;
 import com.i502tech.gitclub.code.activity.MyActivity;
 import com.i502tech.gitclub.code.adapter.ArticleTypeAdapter;
 import com.i502tech.gitclub.code.bean.Article;
 import com.i502tech.gitclub.code.viewmodel.ArticleViewModel;
+import com.i502tech.gitclub.utils.ToastUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -61,7 +64,7 @@ public class ArticleTypeFragment extends BaseFragment {
     @Override
     protected void bindData() {
         mType = Objects.requireNonNull(getArguments()).getInt("type");
-        mAdapter = new ArticleTypeAdapter(articleViewModel.getTypeLiveData().getValue(), context);
+        mAdapter = new ArticleTypeAdapter(new ArrayList<Article>(), context);
         recyclerview.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         recyclerview.setAdapter(mAdapter);
     }
@@ -71,13 +74,17 @@ public class ArticleTypeFragment extends BaseFragment {
         super.dataObserver();
         articleViewModel.getTypeArticles(mType, String.valueOf(page), String.valueOf("10"), String.valueOf("3"))
                 .getTypeLiveData()
-                .observe(this, new Observer<List<Article>>() {
+                .observe(this, new Observer<BaseResponse<List<Article>>>() {
                     @Override
-                    public void onChanged(@Nullable List<Article> articles) {
-                        if (page == 0) {
-                            mAdapter.setNewData(articles);
+                    public void onChanged(@Nullable BaseResponse<List<Article>> response) {
+                        if (response.isSuccess()){
+                            if (page == 0) {
+                                mAdapter.setNewData(response.data);
+                            }else {
+                                mAdapter.addData(response.data);
+                            }
                         }else {
-                            mAdapter.addData(articles);
+                            ToastUtil.show(response.msg);
                         }
                     }
                 });

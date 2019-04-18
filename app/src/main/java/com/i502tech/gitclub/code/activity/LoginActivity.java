@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.i502tech.gitclub.R;
+import com.i502tech.gitclub.api.http.api.BaseResponse;
 import com.i502tech.gitclub.app.SettingsPreferences;
 import com.i502tech.gitclub.base.BaseActivity;
 import com.i502tech.gitclub.code.bean.User;
@@ -73,13 +74,17 @@ public class LoginActivity extends BaseActivity {
                 }
                 userViewModel.loginRegister(btnLogin.getText().toString(), etCount.getText().toString(), etPassward.getText().toString())
                         .getUser()
-                        .observe(this, new Observer<User>() {
+                        .observe(this, new Observer<BaseResponse<User>>() {
                             @Override
-                            public void onChanged(@Nullable User user) {
-                                BeanUtils.copyProperties(user, userInfo);
-                                SettingsPreferences.get().setUser(user);
-                                toActivity(MainActivity.class);
-                                finish();
+                            public void onChanged(@Nullable BaseResponse<User> response) {
+                                if (response.isSuccess()){
+                                    BeanUtils.copyProperties(response.data, userInfo);
+                                    SettingsPreferences.get().setUser(response.data);
+                                    toActivity(MainActivity.class);
+                                    finish();
+                                }else {
+                                    toast(response.msg);
+                                }
                             }
                         });
                 break;
