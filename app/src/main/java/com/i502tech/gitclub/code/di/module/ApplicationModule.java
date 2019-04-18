@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.i502tech.gitclub.app.manager.NetWorkLiveData;
 import com.i502tech.gitclub.code.bean.User;
 import com.i502tech.gitclub.code.di.ApplicationContext;
 
@@ -51,4 +52,9 @@ public class ApplicationModule {
         return new GsonBuilder().create();
     }
 
+    @Singleton
+    @Provides
+    NetWorkLiveData providesNetWorkLiveData(){
+        return new NetWorkLiveData(mApplication);
+    }
 }
