@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.i502tech.gitclub.App;
+import com.i502tech.gitclub.app.manager.NetWorkLiveData;
 import com.i502tech.gitclub.code.bean.User;
 import com.i502tech.gitclub.code.di.ApplicationContext;
 import com.i502tech.gitclub.code.di.module.ApplicationModule;
@@ -27,5 +28,7 @@ public interface ApplicationComponent {
     User getUser();
 
     Gson getGson();
+
+    NetWorkLiveData getNetWorkLiveData();
 
 }

@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import com.i502tech.gitclub.R;
+import com.i502tech.gitclub.app.manager.NetWorkLiveData;
 import com.i502tech.gitclub.base.BaseFragment;
 import com.i502tech.gitclub.base.mvvm.Resource;
 import com.i502tech.gitclub.code.adapter.ArticleTypeAdapter;
@@ -32,6 +33,9 @@ public class ArticleTypeFragment extends BaseFragment {
 
     @Inject
     ArticleViewModel articleViewModel;
+
+    @Inject
+    NetWorkLiveData netWorkLiveData;
 
     private ArticleTypeAdapter mAdapter;
     private int page;
@@ -81,6 +85,11 @@ public class ArticleTypeFragment extends BaseFragment {
                         ToastUtil.show(response.msg);
                     }
                 });
+        netWorkLiveData.observe(this, networkInfo ->{
+            if (!networkInfo.isConnected()){
+                ToastUtil.show("网络断开了。。。");
+            }
+        });
     }
 
     @Override

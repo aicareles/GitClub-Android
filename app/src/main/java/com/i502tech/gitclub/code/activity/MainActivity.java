@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.i502tech.gitclub.R;
 import com.i502tech.gitclub.api.http.api.BaseResponse;
+import com.i502tech.gitclub.app.manager.NetWorkLiveData;
 import com.i502tech.gitclub.base.BaseActivity;
 import com.i502tech.gitclub.base.mvvm.Resource;
 import com.i502tech.gitclub.code.adapter.ArticleAdapter;
@@ -33,6 +34,9 @@ public class MainActivity extends BaseActivity {
 
     @Inject
     ArticleViewModel articleViewModel;
+
+    @Inject
+    NetWorkLiveData netWorkLiveData;
 
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
@@ -87,6 +91,12 @@ public class MainActivity extends BaseActivity {
                         tvNum.setText(new StringBuilder().append("点击搜索，已收录").append(resource.data).append("个开源项目"));
                     }
                 });
+        netWorkLiveData.observe(this, networkInfo ->{
+            if (!networkInfo.isConnected()){
+                toast("网络断开了。。。");
+            }
+        });
+
     }
 
     @Override
