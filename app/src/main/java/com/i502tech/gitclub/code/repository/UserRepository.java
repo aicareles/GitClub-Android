@@ -30,7 +30,7 @@ public class UserRepository {
     public LiveData<Resource<User>> login(String nickName, String password){
         final MutableLiveData<Resource<User>> data = new MutableLiveData<>();
         Map<String, String> map = new HashMap<>();
-        map.put("userName", nickName);
+        map.put("username", nickName);
         map.put("password", password);
         HttpUtils.ApiFunc(RetrofitManager.mApiService.login(map), response -> data.setValue(response));
         return data;

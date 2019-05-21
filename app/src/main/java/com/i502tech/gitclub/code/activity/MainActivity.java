@@ -74,6 +74,7 @@ public class MainActivity extends BaseActivity {
                             mAdapter.setNewData(response.data);
                         }else {
                             mAdapter.addData(response.data);
+                            mAdapter.loadMoreComplete();
                         }
                     }else {
                         toast(response.msg);

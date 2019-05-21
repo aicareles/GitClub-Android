@@ -7,35 +7,35 @@ package com.i502tech.gitclub.code.bean;
 public class User {
 
     /**
-     * admin_status : 0
+     * adminStatus : 0
      * avatar :
      * city :
      * date : 2019-04-11 18:18:28
      * gender :
-     * nick_name : 刘磊
-     * open_id :
+     * userName : 刘磊
+     * openId :
      * score : 0
-     * session_key :
-     * user_id : 4545
+     * sessionSey :
+     * userId : 4545
      */
 
-    private int admin_status;
+    private int adminStatus;
     private String avatar;
     private String city;
     private String date;
     private String gender;
-    private String nick_name;
-    private String open_id;
+    private String userName;
+    private String openId;
     private int score;
-    private String session_key;
-    private int user_id;
+    private String sessionKey;
+    private int userId;
 
-    public int getAdmin_status() {
-        return admin_status;
+    public int getAdminStatus() {
+        return adminStatus;
     }
 
-    public void setAdmin_status(int admin_status) {
-        this.admin_status = admin_status;
+    public void setAdminStatus(int adminStatus) {
+        this.adminStatus = adminStatus;
     }
 
     public String getAvatar() {
@@ -70,20 +70,20 @@ public class User {
         this.gender = gender;
     }
 
-    public String getNick_name() {
-        return nick_name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setNick_name(String nick_name) {
-        this.nick_name = nick_name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getOpen_id() {
-        return open_id;
+    public String getOpenId() {
+        return openId;
     }
 
-    public void setOpen_id(String open_id) {
-        this.open_id = open_id;
+    public void setOpenId(String openId) {
+        this.openId = openId;
     }
 
     public int getScore() {
@@ -94,35 +94,35 @@ public class User {
         this.score = score;
     }
 
-    public String getSession_key() {
-        return session_key;
+    public String getSessionKey() {
+        return sessionKey;
     }
 
-    public void setSession_key(String session_key) {
-        this.session_key = session_key;
+    public void setSessionKey(String sessionKey) {
+        this.sessionKey = sessionKey;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "admin_status=" + admin_status +
+                "adminStatus=" + adminStatus +
                 ", avatar='" + avatar + '\'' +
                 ", city='" + city + '\'' +
                 ", date='" + date + '\'' +
                 ", gender='" + gender + '\'' +
-                ", nick_name='" + nick_name + '\'' +
-                ", open_id='" + open_id + '\'' +
+                ", userName='" + userName + '\'' +
+                ", openId='" + openId + '\'' +
                 ", score=" + score +
-                ", session_key='" + session_key + '\'' +
-                ", user_id=" + user_id +
+                ", sessionKey='" + sessionKey + '\'' +
+                ", userId=" + userId +
                 '}';
     }
 }

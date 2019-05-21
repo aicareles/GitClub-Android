@@ -25,11 +25,11 @@ public class ArticleAdapter extends BaseQuickAdapter<Article, BaseViewHolder> {
     @Override
     protected void convert(BaseViewHolder helper, Article item) {
         helper.setText(R.id.tv_title, item.getTitle());
-        helper.setText(R.id.tv_name_des, String.format("%s%s", item.getUser().getNick_name(), item.getDes()));
+        helper.setText(R.id.tv_name_des, String.format("%s%s", item.getUser().getUserName(), item.getDes()));
         ImageView ivAvater = helper.getView(R.id.iv_avater);
         ImageView ivCover = helper.getView(R.id.iv_cover);
         GlideUtil.displayCircle(mContext, ivAvater, item.getUser().getAvatar());
-        String url = item.getImg_url();
+        String url = item.getImgUrl();
         if (url.endsWith("gif")){
             Glide.with(mContext).asGif().load(url).into(ivCover);
         }else {

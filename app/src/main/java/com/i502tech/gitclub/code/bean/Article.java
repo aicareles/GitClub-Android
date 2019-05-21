@@ -7,55 +7,55 @@ package com.i502tech.gitclub.code.bean;
 public class Article {
 
     /**
-     * article_id : 2227
+     * articleId : 2227
      * category : Android
-     * child_category : 0
+     * childCategory : 0
      * comments : 0
      * contributor :
-     * contributor_id : 2
+     * contributorId : 2
      * date : 2019-04-12 00:00:00
      * des : 一个从Google Play, GitHub, Amazon 或者 F-Droid上检查app更新的library。
-     * img_url : https://gitclub.502tech.com/GitClub/image/12140D4ACA1E4338BCB1ECA1DF126793.gif?Expires=1852706744&OSSAccessKeyId=LTAI4KXTQGO5UMVQ&Signature=SL3Hs987cihx3ziK95yZ7am0Qxo%3D
+     * imgUrl : https://gitclub.502tech.com/GitClub/image/12140D4ACA1E4338BCB1ECA1DF126793.gif?Expires=1852706744&OSSAccessKeyId=LTAI4KXTQGO5UMVQ&Signature=SL3Hs987cihx3ziK95yZ7am0Qxo%3D
      * link : https://github.com/javiersantos/AppUpdater
      * rank : 0
-     * review_status : 1
+     * reviewStatus : 1
      * stars : 0
      * tag : 网络
      * title : AppUpdater
-     * un_stars : 0
-     * update_date : 2019-04-12 09:24:33
-     * user : {"admin_status":1,"avatar":"https://wx.qlogo.cn/mmopen/vi_32/ZtYmxPFhJgn29xuLFiatw3xI55ekSGZBTwoxzj5KEtR8qvz2bclwrv3EUicFxva9ODMCBStHZ3ehmFtyPQU4Edaw/132","city":"","date":"2018-09-09 14:40:13","gender":"","nick_name":"V V","open_id":"oIXfM4r2dHJSSjr_udB6v_hwMoWI","score":0,"session_key":"+d5wnhlJrl/VAETsaQtVyw==","user_id":2}
+     * unStars : 0
+     * updateDate : 2019-04-12 09:24:33
+     * user : {"adminStatus":1,"avatar":"https://wx.qlogo.cn/mmopen/vi_32/ZtYmxPFhJgn29xuLFiatw3xI55ekSGZBTwoxzj5KEtR8qvz2bclwrv3EUicFxva9ODMCBStHZ3ehmFtyPQU4Edaw/132","city":"","date":"2018-09-09 14:40:13","gender":"","userName":"V V","openId":"oIXfM4r2dHJSSjr_udB6v_hwMoWI","score":0,"sessionKey":"+d5wnhlJrl/VAETsaQtVyw==","userId":2}
      * views : 2
-     * wrap_link : i6Fzya
+     * wrapLink : i6Fzya
      */
 
-    private int article_id;
+    private int articleId;
     private String category;
-    private int child_category;
+    private int childCategory;
     private int comments;
     private String contributor;
-    private int contributor_id;
+    private int contributorId;
     private String date;
     private String des;
-    private String img_url;
+    private String imgUrl;
     private String link;
     private int rank;
-    private int review_status;
+    private int reviewStatus;
     private int stars;
     private String tag;
     private String title;
-    private int un_stars;
-    private String update_date;
+    private int unStars;
+    private String updateDate;
     private UserBean user;
     private int views;
-    private String wrap_link;
+    private String wrapLink;
 
-    public int getArticle_id() {
-        return article_id;
+    public int getArticleId() {
+        return articleId;
     }
 
-    public void setArticle_id(int article_id) {
-        this.article_id = article_id;
+    public void setArticleId(int articleId) {
+        this.articleId = articleId;
     }
 
     public String getCategory() {
@@ -66,12 +66,12 @@ public class Article {
         this.category = category;
     }
 
-    public int getChild_category() {
-        return child_category;
+    public int getChildCategory() {
+        return childCategory;
     }
 
-    public void setChild_category(int child_category) {
-        this.child_category = child_category;
+    public void setChildCategory(int childCategory) {
+        this.childCategory = childCategory;
     }
 
     public int getComments() {
@@ -90,12 +90,12 @@ public class Article {
         this.contributor = contributor;
     }
 
-    public int getContributor_id() {
-        return contributor_id;
+    public int getContributorId() {
+        return contributorId;
     }
 
-    public void setContributor_id(int contributor_id) {
-        this.contributor_id = contributor_id;
+    public void setContributorId(int contributorId) {
+        this.contributorId = contributorId;
     }
 
     public String getDate() {
@@ -114,12 +114,12 @@ public class Article {
         this.des = des;
     }
 
-    public String getImg_url() {
-        return img_url;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public void setImg_url(String img_url) {
-        this.img_url = img_url;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public String getLink() {
@@ -138,12 +138,12 @@ public class Article {
         this.rank = rank;
     }
 
-    public int getReview_status() {
-        return review_status;
+    public int getReviewStatus() {
+        return reviewStatus;
     }
 
-    public void setReview_status(int review_status) {
-        this.review_status = review_status;
+    public void setReviewStatus(int reviewStatus) {
+        this.reviewStatus = reviewStatus;
     }
 
     public int getStars() {
@@ -170,20 +170,20 @@ public class Article {
         this.title = title;
     }
 
-    public int getUn_stars() {
-        return un_stars;
+    public int getUnStars() {
+        return unStars;
     }
 
-    public void setUn_stars(int un_stars) {
-        this.un_stars = un_stars;
+    public void setUnStars(int unStars) {
+        this.unStars = unStars;
     }
 
-    public String getUpdate_date() {
-        return update_date;
+    public String getUpdateDate() {
+        return updateDate;
     }
 
-    public void setUpdate_date(String update_date) {
-        this.update_date = update_date;
+    public void setUpdateDate(String updateDate) {
+        this.updateDate = updateDate;
     }
 
     public UserBean getUser() {
@@ -202,45 +202,45 @@ public class Article {
         this.views = views;
     }
 
-    public String getWrap_link() {
-        return wrap_link;
+    public String getWrapLink() {
+        return wrapLink;
     }
 
-    public void setWrap_link(String wrap_link) {
-        this.wrap_link = wrap_link;
+    public void setWrapLink(String wrapLink) {
+        this.wrapLink = wrapLink;
     }
 
     public static class UserBean {
         /**
-         * admin_status : 1
+         * adminStatus : 1
          * avatar : https://wx.qlogo.cn/mmopen/vi_32/ZtYmxPFhJgn29xuLFiatw3xI55ekSGZBTwoxzj5KEtR8qvz2bclwrv3EUicFxva9ODMCBStHZ3ehmFtyPQU4Edaw/132
          * city :
          * date : 2018-09-09 14:40:13
          * gender :
-         * nick_name : V V
-         * open_id : oIXfM4r2dHJSSjr_udB6v_hwMoWI
+         * userName : V V
+         * openId : oIXfM4r2dHJSSjr_udB6v_hwMoWI
          * score : 0
-         * session_key : +d5wnhlJrl/VAETsaQtVyw==
-         * user_id : 2
+         * sessionKey : +d5wnhlJrl/VAETsaQtVyw==
+         * userId : 2
          */
 
-        private int admin_status;
+        private int adminStatus;
         private String avatar;
         private String city;
         private String date;
         private String gender;
-        private String nick_name;
-        private String open_id;
+        private String userName;
+        private String openId;
         private int score;
-        private String session_key;
-        private int user_id;
+        private String sessionKey;
+        private int userId;
 
-        public int getAdmin_status() {
-            return admin_status;
+        public int getAdminStatus() {
+            return adminStatus;
         }
 
-        public void setAdmin_status(int admin_status) {
-            this.admin_status = admin_status;
+        public void setAdminStatus(int adminStatus) {
+            this.adminStatus = adminStatus;
         }
 
         public String getAvatar() {
@@ -275,20 +275,20 @@ public class Article {
             this.gender = gender;
         }
 
-        public String getNick_name() {
-            return nick_name;
+        public String getUserName() {
+            return userName;
         }
 
-        public void setNick_name(String nick_name) {
-            this.nick_name = nick_name;
+        public void setUserName(String userName) {
+            this.userName = userName;
         }
 
-        public String getOpen_id() {
-            return open_id;
+        public String getOpenId() {
+            return openId;
         }
 
-        public void setOpen_id(String open_id) {
-            this.open_id = open_id;
+        public void setOpenId(String openId) {
+            this.openId = openId;
         }
 
         public int getScore() {
@@ -299,20 +299,20 @@ public class Article {
             this.score = score;
         }
 
-        public String getSession_key() {
-            return session_key;
+        public String getSessionKey() {
+            return sessionKey;
         }
 
-        public void setSession_key(String session_key) {
-            this.session_key = session_key;
+        public void setSessionKey(String sessionKey) {
+            this.sessionKey = sessionKey;
         }
 
-        public int getUser_id() {
-            return user_id;
+        public int getUserId() {
+            return userId;
         }
 
-        public void setUser_id(int user_id) {
-            this.user_id = user_id;
+        public void setUserId(int userId) {
+            this.userId = userId;
         }
     }
 }

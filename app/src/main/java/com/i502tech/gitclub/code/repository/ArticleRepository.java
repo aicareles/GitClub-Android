@@ -53,7 +53,7 @@ public class ArticleRepository extends BaseRepository {
         Map<String, String> map = new HashMap<>();
         map.put("page", page);
         map.put("size", size);
-        map.put("user_id", user_id);
+        map.put("userId", user_id);
         HttpUtils.ApiFunc(RetrofitManager.mApiService.getMyStarArticles(map),
                 listBaseResponse -> articleTypeLiveData.setValue(listBaseResponse));
     }
@@ -62,7 +62,7 @@ public class ArticleRepository extends BaseRepository {
         Map<String, String> map = new HashMap<>();
         map.put("page", page);
         map.put("size", size);
-        map.put("user_id", user_id);
+        map.put("userId", user_id);
         HttpUtils.ApiFunc(RetrofitManager.mApiService.getMyContributeArticles(map),
                 listBaseResponse -> articleTypeLiveData.setValue(listBaseResponse));
     }

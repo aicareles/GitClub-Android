@@ -28,6 +28,12 @@
             android:layout_height="24dp"/>
     </LinearLayout>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_search"/>
+
     <com.zhy.view.flowlayout.TagFlowLayout
         android:id="@+id/flowlayout"
         android:layout_below="@+id/ll_search"
@@ -38,11 +44,5 @@
         android:paddingEnd="12dp"
         app:max_select="-1">
     </com.zhy.view.flowlayout.TagFlowLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/ll_search"/>
 
 </RelativeLayout>

@@ -113,6 +113,7 @@ public class SearchActivity extends BaseActivity {
             return false;
         });
         flowLayout.setOnTagClickListener((view, position, parent) -> {
+            hideSoftKeyboard();
             flowLayout.setVisibility(View.GONE);
             searchEdit.setText(tagAdapter.getItem(position));
             page = 0;

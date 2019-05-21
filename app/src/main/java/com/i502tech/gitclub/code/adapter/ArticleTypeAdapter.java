@@ -2,7 +2,6 @@ package com.i502tech.gitclub.code.adapter;
 
 import android.content.Context;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -27,11 +26,11 @@ public class ArticleTypeAdapter extends BaseQuickAdapter<Article, BaseViewHolder
     @Override
     protected void convert(BaseViewHolder helper, Article article) {
         helper.setText(R.id.tv_title, article.getTitle());
-        helper.setText(R.id.tv_name, article.getUser().getNick_name());
+        helper.setText(R.id.tv_name, article.getUser().getUserName());
         ImageView ivAvater = helper.getView(R.id.iv_avater);
         ImageView ivCover = helper.getView(R.id.iv_cover);
         GlideUtil.displayCircle(mContext, ivAvater, article.getUser().getAvatar());
-        String url = article.getImg_url();
+        String url = article.getImgUrl();
         if (url.endsWith("gif")){
             Glide.with(mContext).asGif().load(url).into(ivCover);
         }else {
